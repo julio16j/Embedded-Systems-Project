@@ -1,12 +1,12 @@
 ﻿**INTRODUÇÃO**
 
-**	Com o advento da eletrônica digital, os sistemas que antes eram analógicos passaram a possuir processamento lógico. Em consequência a isso, o emprego da eletrônica digital nos sistemas atuais é algo que nos últimos 50 anos vem se expandindo para os mais variados dispositivos que antes eram apenas analógicos.
+  Com o advento da eletrônica digital, os sistemas que antes eram analógicos passaram a possuir processamento lógico. Em consequência a isso, o emprego da eletrônica digital nos sistemas atuais é algo que nos últimos 50 anos vem se expandindo para os mais variados dispositivos que antes eram apenas analógicos.
 
-`	`Um exemplo de equipamento historicamente analógico, são as fechaduras de portas, é algo que a séculos é utilizado em conjunto com uma chave mecânica e atualmente segue sendo amplamente utilizado pela população mundial como um equipamento analógico.
+  Um exemplo de equipamento historicamente analógico, são as fechaduras de portas, é algo que a séculos é utilizado em conjunto com uma chave mecânica e atualmente segue sendo amplamente utilizado pela população mundial como um equipamento analógico.
 
-`	`Por meio disso, é pretendido no presente trabalho o desenvolvimento de um sistema digital que será responsável pela abertura automática de uma fechadura de uma porta. Essa fechadura será um atuador elétrico acionado por meio de um microcontrolador de espressif chamado ESP32. 
+  Por meio disso, é pretendido no presente trabalho o desenvolvimento de um sistema digital que será responsável pela abertura automática de uma fechadura de uma porta. Essa fechadura será um atuador elétrico acionado por meio de um microcontrolador de espressif chamado ESP32. 
 
-`	`O usuário deverá por meio de uma tag de RFID se identificar para o ESP32. O ESP32 por sua vez irá se comunicar via wifi com um sistema robusto que irá verificar se o usuário tem permissão para abrir a porta, em caso afirmativo, o ESP32 envia um sinal elétrico para a tranca e por meio disso é liberada a passagem do usuário.
+  O usuário deverá por meio de uma tag de RFID se identificar para o ESP32. O ESP32 por sua vez irá se comunicar via wifi com um sistema robusto que irá verificar se o usuário tem permissão para abrir a porta, em caso afirmativo, o ESP32 envia um sinal elétrico para a tranca e por meio disso é liberada a passagem do usuário.
 
 A grande vantagem desse projeto é a unificação de todas as chaves de um ambiente onde existem muitas portas que necessitam de controle de acesso. Um exemplo disso é o IFPB campus Campina Grande que necessita de um setor de chaves para liberar o acesso a laboratórios para alunos e servidores.
 
