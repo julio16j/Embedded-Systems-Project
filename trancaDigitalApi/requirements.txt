@@ -1,0 +1,6 @@
+flask
+apispec
+apispec_webframeworks
+marshmallow
+flask_swagger_ui
+Flask-SQLAlchemy
