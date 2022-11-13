@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_restful import reqparse
 
 user_blueprint = Blueprint(name="user_blueprint", import_name=__name__)
 user = {'name': 'joao_henrique'}
@@ -42,6 +43,16 @@ def save_user():
       tags:
           - User
     """
+    arguments = reqparse.RequestParser()
+    arguments.add_argument('key')
+    arguments.add_argument('username')
+
+    data = arguments.parse_args()
+
+    new_user = {
+      'key': data['key'],
+      'username': data['username']
+    }
     data = request.get_json()
     user['name'] = data['name']
     output = {"msg": f"New user saved: '{user}'"}
