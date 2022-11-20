@@ -2,6 +2,8 @@ from sql_alchemy import bd
 from models.lock import LockModel
 from models.user import UserModel
 from datetime import datetime
+
+
 class ScheduledTimeModel(bd.Model):
     __tablename__ = 'scheduled_time'
 
@@ -11,7 +13,6 @@ class ScheduledTimeModel(bd.Model):
     initial_datetime = bd.Column(bd.DateTime)
     end_datetime = bd.Column(bd.DateTime)
     
-
     def __init__(self,id_user, id_lock, initial_datetime, end_datetime) -> None:
         self.id_user = id_user
         self.id_lock = id_lock
@@ -28,8 +29,8 @@ class ScheduledTimeModel(bd.Model):
 
     @classmethod
     def find_scheduled_time(cls, id_rfid_card, lock_name):
-        lock_founded = LockModel.find_lock(name=lock_name)
-        user_founded = UserModel.find_user(id_rfid_card=id_rfid_card)
+        lock_founded = LockModel.find_lock(lock_name)
+        user_founded = UserModel.find_user(id_rfid_card)
         if not (lock_founded and user_founded):
             return None
         scheduled_time = cls.query.filter_by(id_user=user_founded.id_user,

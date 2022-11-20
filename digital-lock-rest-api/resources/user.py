@@ -23,22 +23,21 @@ class User(Resource):
         if UserModel.find_user(data['id_rfid_card']):
             return {'message': f'''User id '{data["id_rfid_card"]}' already exists.'''}, 400
 
-        data = User.arguments.parse_args()
         user = UserModel(id_rfid_card=data['id_rfid_card'], name=data['name'])
         user.save_user()
         return user.json(), 201
 
     def put(self):
         data = User.arguments.parse_args()
-
         user = UserModel.find_user(data['id_rfid_card'])
         if user:
             user.update_user(data['id_rfid_card'],data['name'])
             user.save_user()
             return user.json(), 200
+            
         user = UserModel(data['id_rfid_card'],data['name'])
         user.save_user()
-        return user.json(), 200
+        return user.json(), 201
 
     def delete(self):
         data = User.arguments.parse_args()

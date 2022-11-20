@@ -22,22 +22,21 @@ class Lock(Resource):
         if LockModel.find_lock(data['name']):
             return {'message': f'''Lock name '{data["name"]}' already exists.'''}, 400
 
-        data = Lock.arguments.parse_args()
         lock = LockModel(name=data['name'])
         lock.save_lock()
         return lock.json(), 201
 
     def put(self):
         data = Lock.arguments.parse_args()
-
         lock = LockModel.find_lock(data['name'])
         if lock:
             lock.update_lock(data['name'])
             lock.save_lock()
             return lock.json(), 200
+            
         lock = LockModel(data['name'])
         lock.save_lock()
-        return lock.json(), 200
+        return lock.json(), 201
 
     def delete(self):
         data = Lock.arguments.parse_args()

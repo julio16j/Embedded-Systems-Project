@@ -7,7 +7,6 @@ class UserModel(bd.Model):
     id_rfid_card = bd.Column(bd.String(80))
     name = bd.Column(bd.String(80))
     
-
     def __init__(self,id_rfid_card,name) -> None:
         self.id_rfid_card = id_rfid_card
         self.name = name

@@ -4,7 +4,7 @@ class LockModel(bd.Model):
     __tablename__ = 'locks'
 
     id_lock = bd.Column(bd.Integer,primary_key=True)
-    name = bd.Column(bd.String(80))
+    name = bd.Column(bd.Integer)
     
     def __init__(self,name) -> None:
         self.name = name

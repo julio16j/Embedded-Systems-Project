@@ -8,6 +8,8 @@ class ScheduledTimes(Resource):
     def get(self):
         return {'ScheduledTimes': [scheduled_time.json() for scheduled_time in ScheduledTimeModel.query.all()]}
 
+# arrumar os metodos para receber o id do usuario e o id da fechadura 
+# um endpoint pra o microcontrolador consultar: vai passar o id do usuário e o nome da fechadura
 class ScheduledTime(Resource):
     arguments = reqparse.RequestParser()
     arguments.add_argument('id_rfid_card')
@@ -30,6 +32,9 @@ class ScheduledTime(Resource):
         end_datetime = data['end_datetime']
         lock_founded = LockModel.find_lock(name=lock_name)
         user_founded = UserModel.find_user(id_rfid_card=id_rfid_card)
+        if ScheduledTimeModel.find_scheduled_time(id_rfid_card,lock_name):
+            return {'message': f'''Lock name '{data["lock_name"]}' already exists.'''}, 400
+
         scheduled_time = ScheduledTimeModel(id_lock=lock_founded.id_lock, id_user=user_founded.id_user,
             initial_datetime=initial_datetime, end_datetime=end_datetime)
         scheduled_time.save_scheduled_time()
@@ -37,15 +42,23 @@ class ScheduledTime(Resource):
 
     def put(self):
         data = ScheduledTime.arguments.parse_args()
-
-        scheduled_time = ScheduledTimeModel.find_scheduled_time(data['id_rfid_card'], data['lock_name'])
+        id_rfid_card = data['id_rfid_card']
+        lock_name = data['lock_name']
+        initial_datetime = data['initial_datetime']
+        end_datetime = data['end_datetime']
+        scheduled_time = ScheduledTimeModel.find_scheduled_time(id_rfid_card, lock_name)
         if scheduled_time:
-            scheduled_time.update_scheduled_time(data['id_rfid_card'],data['lock_name'])
+            scheduled_time.update_scheduled_time(initial_datetime, end_datetime)
             scheduled_time.save_scheduled_time()
             return scheduled_time.json(), 200
-        scheduled_time = ScheduledTimeModel(data['id_rfid_card'],data['lock_name'])
+
+        
+        lock_founded = LockModel.find_lock(name=lock_name)
+        user_founded = UserModel.find_user(id_rfid_card=id_rfid_card)
+        scheduled_time = ScheduledTimeModel(id_lock=lock_founded.id_lock, id_user=user_founded.id_user,
+            initial_datetime=initial_datetime, end_datetime=end_datetime)
         scheduled_time.save_scheduled_time()
-        return scheduled_time.json(), 200
+        return scheduled_time.json(), 201
 
     def delete(self):
         data = ScheduledTime.arguments.parse_args()

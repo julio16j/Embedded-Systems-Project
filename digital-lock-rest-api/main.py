@@ -4,6 +4,7 @@ from flask_restful import Api
 from resources.user import Users, User
 from resources.lock import Locks, Lock
 from resources.sheduled_time import ScheduledTimes, ScheduledTime
+from resources.exists import Exists
 
 
 app = Flask(__name__)
@@ -23,6 +24,7 @@ api.add_resource(Locks,'/api/locks')
 api.add_resource(Lock,'/api/lock')
 api.add_resource(ScheduledTimes,'/api/scheduled-times')
 api.add_resource(ScheduledTime,'/api/scheduled-time')
+api.add_resource(Exists,'/api/exists')
 
 
 if __name__ == '__main__':
