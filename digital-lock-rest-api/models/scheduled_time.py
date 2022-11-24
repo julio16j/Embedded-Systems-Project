@@ -38,6 +38,18 @@ class ScheduledTimeModel(bd.Model):
         if scheduled_time:
             return scheduled_time
         return None
+    
+    @classmethod
+    def find_scheduled_times(cls, id_rfid_card, lock_name):
+        lock_founded = LockModel.find_lock(lock_name)
+        user_founded = UserModel.find_user(id_rfid_card)
+        if not (lock_founded and user_founded):
+            return []
+        scheduled_time = cls.query.filter_by(id_user=user_founded.id_user,
+            id_lock=lock_founded.id_lock)
+        if scheduled_time:
+            return scheduled_time
+        return []
 
     def save_scheduled_time(self):
         bd.session.add(self)

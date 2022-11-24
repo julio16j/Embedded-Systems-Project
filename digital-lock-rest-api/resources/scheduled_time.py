@@ -32,8 +32,11 @@ class ScheduledTime(Resource):
         end_datetime = data['end_datetime']
         lock_founded = LockModel.find_lock(name=lock_name)
         user_founded = UserModel.find_user(id_rfid_card=id_rfid_card)
-        if ScheduledTimeModel.find_scheduled_time(id_rfid_card,lock_name):
-            return {'message': f'''Lock name '{data["lock_name"]}' already exists.'''}, 400
+        scheduled_times = ScheduledTimeModel.find_scheduled_times(id_rfid_card,lock_name)
+        for scheduled_time in scheduled_times:
+            if scheduled_time.initial_datetime == initial_datetime and (
+                scheduled_time.end_datetime == end_datetime):
+                return {'message': f'This scheduled time already exists.'}, 400
 
         scheduled_time = ScheduledTimeModel(id_lock=lock_founded.id_lock, id_user=user_founded.id_user,
             initial_datetime=initial_datetime, end_datetime=end_datetime)
