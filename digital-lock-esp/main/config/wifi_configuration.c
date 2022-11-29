@@ -1,13 +1,12 @@
 #include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/timers.h"
-#include "freertos/event_groups.h"
+#include <string.h>
 #include "esp_wifi.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
 #include "esp_netif.h"
-#include "esp_http_client.h"
+
+#define ssid_size 32
+#define password_size 64
 
 static void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
@@ -30,7 +29,7 @@ static void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_b
     }
 }
 
-void wifi_init () {
+void wifi_init (char *ssid, char *password) {
     nvs_flash_init();
     esp_netif_init();
     esp_event_loop_create_default();
@@ -39,4 +38,12 @@ void wifi_init () {
     esp_wifi_init(&wifi_initiation);
     esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, wifi_event_handler, NULL);
     esp_event_handler_register(IP_EVENT, IP_EVENT_STA_GOT_IP, wifi_event_handler, NULL);
+    wifi_config_t wifi_configuration = {
+        .sta = {}
+    };
+    strncpy((char *)wifi_configuration.sta.ssid, (char *)&ssid[0], ssid_size);
+    strncpy((char *)wifi_configuration.sta.password, (char *)&password[0], password_size);
+    esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_configuration);
+    esp_wifi_start();
+    esp_wifi_connect();
 }
