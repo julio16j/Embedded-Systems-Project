@@ -7,6 +7,8 @@
 
 #define ssid_size 32
 #define password_size 64
+char wifi_ssid[ssid_size] = "wifi1";
+char wifi_password[password_size] = "12345678";
 
 static void wifi_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
